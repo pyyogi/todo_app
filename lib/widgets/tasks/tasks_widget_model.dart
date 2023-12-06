@@ -44,8 +44,10 @@ class TasksWidgetModel extends ChangeNotifier {
     box.listenable(keys: [groupKey]).addListener(() => _readTasks());
   }
 
-  void deleteTask(int groupIndex) async {
-    _group?.tasks?.deleteFromHive(groupIndex);
+  void deleteTask(int taskIndex) async {
+    // _group?.tasks?.deleteFromHive(groupIndex);
+    await _group?.tasks?.deleteFromHive(taskIndex);
+    await _group?.save();
   }
 
   void showTaskForm(BuildContext context) {

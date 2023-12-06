@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo_app/widgets/app_bar/app_bar_widget.dart';
 import 'package:todo_app/widgets/task_form/task_form_widget.dart';
 import 'package:todo_app/widgets/tasks/tasks_widget_model.dart';
@@ -94,10 +95,31 @@ class _TaskRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = TasksWidgetModelProvider.read(context)!.model;
     final task = model.tasks[idxTaskList].text;
-    return ListTile(
-      title: Text(task),
-      trailing: const Icon(Icons.chevron_right),
-      onTap: () {},
+    return Slidable(
+      child: ListTile(
+        title: Text(task),
+        trailing: const Icon(Icons.chevron_right),
+        onTap: () {},
+      ),
+      startActionPane: ActionPane(
+        motion: const StretchMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) => model.deleteTask(idxTaskList),
+            backgroundColor: Color(0xFFFE4A49),
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+          SlidableAction(
+            onPressed: (context) => () {},
+            backgroundColor: Color(0xFF21B7CA),
+            foregroundColor: Colors.white,
+            icon: Icons.edit,
+            label: 'Edit',
+          ),
+        ],
+      ),
     );
   }
 }
